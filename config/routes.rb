@@ -1,4 +1,20 @@
 Rails.application.routes.draw do
+  # Routes for signing up
+  
+  match("/sign_up", { :controller => "users", :action => "registration_form", :via => "get" })
+
+  match("/insert_user", { :controller => "users", :action => "create", :via => "post" })
+
+  # Routes for signing in
+  match("/sign_in", { :controller => "users", :action => "session_form", :via => "get" })
+
+  match("/verify_credentials", { :controller => "users", :action => "add_cookie", :via => "post" })
+
+  # Route for signing out
+
+  match("/sign_out", { :controller => "users", :action => "remove_cookies", :via => "get" })
+
+  # Homepage
 
   match("/", { :controller => "users", :action => "index", :via => "get" })
 

@@ -14,7 +14,7 @@ class LikesController < ApplicationController
 
   def create
     like = Like.new
-    like.fan_id = params.fetch(:qs_fan_id, nil)
+    like.fan_id = current_user.id
     like.photo_id = params.fetch(:qs_photo_id, nil)
     like.save
     
@@ -40,8 +40,16 @@ class LikesController < ApplicationController
   end
 
   def destroy
-    Like.find(params.fetch(:id)).destroy
+    like = Like.find(params.fetch(:rt_like_id)).destroy
 
-    render({ :json => like.as_json })
+    respond_to do |format|
+      format.json do
+        render({ :json => like.as_json })
+      end
+
+      format.html do
+        redirect_to("/photos/#{like.photo_id}")
+      end
+    end
   end
 end

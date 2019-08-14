@@ -1,39 +1,66 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Target Photogram GUI</title>
-    <%= csrf_meta_tags %>
 
-    <!-- Expand the number of characters we can use in the document beyond basic ASCII 🎉 -->
-    <meta charset="utf-8">
+<head>
+  <title>Target Photogram Signin</title>
+  <%= csrf_meta_tags %>
 
-    <!-- Make it responsive to small screens -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <%= csp_meta_tag %>
+  <!-- Expand the number of characters we can use in the document beyond basic ASCII 🎉 -->
+  <meta charset="utf-8">
 
-    <%= stylesheet_link_tag    'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
-  </head>
+  <!-- Make it responsive to small screens -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <%= csp_meta_tag %>
 
-  <body>
-    <nav>
-      <div>
-        <a href="/">
-          <i class="fab fa-firstdraft fa-fw"></i>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+</head>
+
+<body>
+  <nav>
+    <div>
+      <a href="/">
+        All Users
+      </a>
+    </div>
+
+    <div>
+      <a href="/photos">
+        All Photos
+      </a>
+    </div>
+
+    <% if current_user == nil %>
+    <div>
+      <a href="/sign_up">
+        Sign up
+      </a>
+    </div>
+
+    <div>
+      <a href="/sign_in">
+        Sign in
+      </a>
+    </div>
+    <% else %>
+    <div>
+      <a href="/users/<%= current_user.username %>">
+        <%= current_user.username %>
+      </a>
+    </div>
     
-          All Users
-        </a>
-      </div>
-    
-      <div>
-        <a href="/photos">
-          <i class="fas fa-users"></i>
-    
-          All Photos
-        </a>
-      </div>
-    </nav>
+    <div>
+      <a href="/sign_out">
+        Sign out
+      </a>
+    </div>
+    <% end %>
+  </nav>
 
-    <%= yield %>
-  </body>
+  <p><%= notice %></p>
+  <p><%= alert %></p>
+
+  <%= yield %>
+</body>
+
 </html>

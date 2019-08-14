@@ -31,7 +31,7 @@ class PhotosController < ApplicationController
   def create
     photo = Photo.new
 
-    photo.owner_id = params.fetch(:qs_owner_id, nil)
+    photo.owner_id = current_user.id
     photo.caption = params.fetch(:qs_caption, nil)
     photo.image = params.fetch(:qs_image, nil)
     photo.likes_count = params.fetch(:qs_likes_count, 0)

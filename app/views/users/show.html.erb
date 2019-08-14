@@ -10,6 +10,7 @@
   <dt>Following</dt>
   <dd><%= @user.following.count %></dd>
 
+  <% if current_user == @user %>
   <dt>Edit user</dt>
   <dd>
     <form action="/patch_user/<%= @user.id %>" method="post">
@@ -22,6 +23,7 @@
       <button>Update user</button>
     </form>
   </dd>
+  <% end %>
 </dl>
 
 <nav>
