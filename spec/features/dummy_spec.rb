@@ -1,19 +1,5 @@
 require "rails_helper"
 
-describe "This project" do
-  it "is not graded" do
-    expect(1).to eq(1)
-  end
-end
-
-
-describe "" do
-  it "" do
-    # page.should have_content('Like')
-    page.select("")
-  end
-end
-
 describe "/photos/[SOME ID]" do
   it "automatically associates photo with signed in user", points: 2 do
     first_user = User.new
@@ -39,6 +25,37 @@ describe "/photos/[SOME ID]" do
 
 
     expect(page).to have_text("Update photo")
+  end
+end
+
+describe "/photos/[SOME ID]" do
+  it "automatically associates like with signed in user", points: 2 do
+    first_user = User.new
+    first_user.password = "password"
+    first_user.username = "alice"
+    first_user.save
+
+    photo = Photo.new
+    photo.image = "https://some.test/image-#{Time.now.to_i}.jpg"
+    photo.caption = "Some test caption #{Time.now.to_i}"
+    photo.owner_id = first_user.id
+    photo.likes_count = 0
+    photo.save
+
+    visit "/sign_in"
+    
+    within(:css, "form") do
+      fill_in "Username", with: first_user.username
+      fill_in "Password", with: first_user.password
+      click_on "Sign in"
+    end
+    
+    visit "/photos/#{photo.id}"
+    old_likes_count = 0
+
+    click_on "Like"
+
+    expect(photo.likes_count).to eql(old_likes_count + 1)
   end
 end
 
