@@ -15,7 +15,8 @@
   <dd>
     <form action="/patch_user/<%= @user.id %>" method="post">
       <label for="browser_username">Username</label>
-      <input id="browser_username" type="text" name="qs_username" placeholder="Enter a username..." value="<%= @user.username %>">
+      <input id="browser_username" type="text" name="qs_username" placeholder="Enter a username..."
+        value="<%= @user.username %>">
 
       <label for="browser_private">Private?</label>
       <input id="browser_private" type="checkbox" name="qs_private" <%= " checked" if @user.private %>>
@@ -69,28 +70,34 @@
 
     <th></th>
   </tr>
-  
+
   <% @user.own_photos.each do |photo| %>
-    <tr>
-      <td>
-        <img src="<%= photo.image %>">
-      </td>
-    
-      <td>
-        <%= photo.poster.username %>
-      </td>
-    
-      <td>
-        <%= photo.caption %>
-      </td>
-    
-      <td>
-        <%= time_ago_in_words(photo.created_at) %> ago
-      </td>
-    
-      <td>
-        <%= photo.likes_count %>
-      </td>
-    </tr>
+  <tr>
+    <td>
+      <img src="<%= photo.image %>">
+    </td>
+
+    <td>
+      <%= photo.poster.username %>
+    </td>
+
+    <td>
+      <%= photo.caption %>
+    </td>
+
+    <td>
+      <%= time_ago_in_words(photo.created_at) %> ago
+    </td>
+
+    <td>
+      <%= photo.likes_count %>
+    </td>
+
+    <td>
+      <a href="/photos/<%= photo.id %>">
+        Show details
+      </a>
+    </td>
+  </tr>
   <% end %>
 </table>

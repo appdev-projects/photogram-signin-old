@@ -77,6 +77,12 @@
       <td>
         <%= photo.likes_count %>
       </td>
+
+      <td>
+        <a href="/photos/<%= photo.id %>">
+          Show details
+        </a>
+      </td>
     </tr>
   <% end %>
 </table>

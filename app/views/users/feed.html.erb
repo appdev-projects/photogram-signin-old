@@ -54,28 +54,34 @@
 
     <th></th>
   </tr>
-  
+
   <% @user.feed.each do |photo| %>
-    <tr>
-      <td>
-        <img src="<%= photo.image %>">
-      </td>
-    
-      <td>
-        <%= photo.poster.username %>
-      </td>
-    
-      <td>
-        <%= photo.caption %>
-      </td>
-    
-      <td>
-        <%= time_ago_in_words(photo.created_at) %> ago
-      </td>
-    
-      <td>
-        <%= photo.likes_count %>
-      </td>
-    </tr>
+  <tr>
+    <td>
+      <img src="<%= photo.image %>">
+    </td>
+
+    <td>
+      <%= photo.poster.username %>
+    </td>
+
+    <td>
+      <%= photo.caption %>
+    </td>
+
+    <td>
+      <%= time_ago_in_words(photo.created_at) %> ago
+    </td>
+
+    <td>
+      <%= photo.likes_count %>
+    </td>
+
+    <td>
+      <a href="/photos/<%= photo.id %>">
+        Show details
+      </a>
+    </td>
+  </tr>
   <% end %>
 </table>
