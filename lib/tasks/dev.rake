@@ -59,7 +59,7 @@ desc "Fill the database tables with some dummy data"
     ]
     User.import(users, {:validate => false})
 
-    if User.method_defined?(:passowrd) || User.has_attribute?(:password_digest)
+    if User.method_defined?(:password) || User.has_attribute?(:password_digest)
       User.all.each do |user|
         user.password = "password"
         user.save
