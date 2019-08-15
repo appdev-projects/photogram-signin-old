@@ -8,27 +8,29 @@
   <dd>
     <%= @user.followers.count %>
 
-    <% follow_request = FollowRequest.where({ :sender_id => current_user.id, :recipient_id => @user.id }).at(0) %>
+    <% if @user != current_user %>
+      <% follow_request = FollowRequest.where({ :sender_id => current_user.id, :recipient_id => @user.id }).at(0) %>
 
-    <div>
-      <% if follow_request == nil %>
-        <form action="/insert_follow_request" method="post">
-          <input type="hidden" name="qs_recipient_id" value="<%= @user.id %>">
+      <div>
+        <% if follow_request == nil %>
+          <form action="/insert_follow_request" method="post">
+            <input type="hidden" name="qs_recipient_id" value="<%= @user.id %>">
 
-          <button>
-            Follow
-          </button>
-        </form>
-      <% elsif follow_request.status == "pending" %>
-        Request sent.
+            <button>
+              Follow
+            </button>
+          </form>
+        <% elsif follow_request.status == "pending" %>
+          Request sent.
 
-        <a href="/delete_follow_request/<%= follow_request.id %>">
-          Cancel
-        </a>
-      <% elsif follow_request.status == "accepted" %>
-        <a href="/delete_follow_request/<%= follow_request.id %>">
-          Unfollow
-        </a>
+          <a href="/delete_follow_request/<%= follow_request.id %>">
+            Cancel
+          </a>
+        <% elsif follow_request.status == "accepted" %>
+          <a href="/delete_follow_request/<%= follow_request.id %>">
+            Unfollow
+          </a>
+        <% end %>
       <% end %>
     </div>
 
