@@ -5,7 +5,59 @@
   <dd><%= @user.private %></dd>
 
   <dt>Followers</dt>
-  <dd><%= @user.followers.count %></dd>
+  <dd>
+    <%= @user.followers.count %>
+
+    <% follow_request = FollowRequest.where({ :sender_id => current_user.id, :recipient_id => @user.id }).at(0) %>
+
+    <div>
+      <% if follow_request == nil %>
+        <form action="/insert_follow_request" method="post">
+          <input type="hidden" name="qs_recipient_id" value="<%= @user.id %>">
+
+          <button>
+            Follow
+          </button>
+        </form>
+      <% elsif follow_request.status == "pending" %>
+        Request sent.
+
+        <a href="/delete_follow_request/<%= follow_request.id %>">
+          Cancel
+        </a>
+      <% elsif follow_request.status == "accepted" %>
+        <a href="/delete_follow_request/<%= follow_request.id %>">
+          Unfollow
+        </a>
+      <% end %>
+    </div>
+
+    <%# if @user == current_user %>
+      <ul>
+        <% @user.received_follow_requests.where({ :status => "pending" }).each do |follow_request| %>
+          <li>
+            <%= follow_request.sender.username %>
+
+            <form action="/modify_follow_request/<%= follow_request.id %>" method="post">
+              <input name="qs_status" value="accepted" type="hidden">
+
+              <button>
+                Accept
+              </button>
+            </form>
+
+            <form action="/modify_follow_request/<%= follow_request.id %>" method="post">
+              <input name="qs_status" value="rejected" type="hidden">
+            
+              <button>
+                Reject
+              </button>
+            </form>
+          </li>
+        <% end %>
+      </ul>
+    <%# end %>
+  </dd>
 
   <dt>Following</dt>
   <dd><%= @user.following.count %></dd>

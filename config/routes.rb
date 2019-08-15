@@ -94,6 +94,13 @@ Rails.application.routes.draw do
   match("/delete_comment/:rt_comment_id", { :controller => "comments", :action => "destroy", :via => "get"})
 
 
+  # Follow Request routes
+  match("/insert_follow_request", { :controller => "follow_requests", :action => "create", :via => "post"})
+
+  match("/delete_follow_request/:rt_follow_request_id", { :controller => "follow_requests", :action => "destroy", :via => "get"})
+
+  match("/modify_follow_request/:rt_follow_request_id", { :controller => "follow_requests", :action => "update", :via => "post"})
+
   # ============
 
   devise_for :admin_users, ActiveAdmin::Devise.config
