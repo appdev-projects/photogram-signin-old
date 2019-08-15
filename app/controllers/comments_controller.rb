@@ -21,6 +21,13 @@ class CommentsController < ApplicationController
     
     comment.save
 
+    current_user.comments_count = current_user.comments_count + 1
+    current_user.save
+
+    photo = Photo.where({ :id => comment.photo_id }).at(0)
+    photo.comments_count = photo.comments_count + 1
+    photo.save
+
     respond_to do |format|
       format.json do
         render({ :json => comment.as_json })
@@ -50,6 +57,13 @@ class CommentsController < ApplicationController
     comment = Comment.where({ :id => the_id }).at(0)
 
     comment.destroy
+
+    current_user.comments_count = current_user.comments_count - 1
+    current_user.save
+
+    photo = Photo.where({ :id => comment.photo_id }).at(0)
+    photo.comments_count = photo.comments_count - 1
+    photo.save
 
     render({ :json => comment.as_json })
   end

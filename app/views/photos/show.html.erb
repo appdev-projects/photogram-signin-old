@@ -18,8 +18,14 @@
 
   <dt>Posted</dt>
   <dd>
-    2 months ago
+    <%= time_ago_in_words(@photo.created_at) %> ago
   </dd>
+
+  <dt>Likes count</dt>
+  <dd><%= @photo.likes_count %></dd>
+
+  <dt>Comments count</dt>
+  <dd><%= @photo.comments_count %></dd>
 
   <dt>Fans</dt>
   <dd>

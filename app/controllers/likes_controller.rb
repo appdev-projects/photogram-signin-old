@@ -17,6 +17,13 @@ class LikesController < ApplicationController
     like.fan_id = current_user.id
     like.photo_id = params.fetch(:qs_photo_id, nil)
     like.save
+
+    current_user.likes_count = current_user.likes_count + 1
+    current_user.save
+
+    photo = Photo.where({ :id => like.photo_id }).at(0)
+    photo.likes_count = photo.likes_count + 1
+    photo.save
     
     respond_to do |format|
       format.json do
@@ -41,6 +48,13 @@ class LikesController < ApplicationController
 
   def destroy
     like = Like.find(params.fetch(:rt_like_id)).destroy
+
+    current_user.likes_count = current_user.likes_count - 1
+    current_user.save
+
+    photo = Photo.where({ :id => like.photo_id }).at(0)
+    photo.likes_count = photo.likes_count - 1
+    photo.save
 
     respond_to do |format|
       format.json do
