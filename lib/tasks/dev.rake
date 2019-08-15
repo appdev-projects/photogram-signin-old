@@ -64,9 +64,9 @@ desc "Fill the database tables with some dummy data"
         user.password = "password"
         user.save
       end
-      p "Added passwords to users"
+      puts "Found a password column. Added passwords."
     else
-      p "No password or password_digest column for a User yet"
+      puts "No password column found. Didn't add passwords."
     end
 
     follow_requests = [
