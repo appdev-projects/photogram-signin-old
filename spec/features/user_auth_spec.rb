@@ -52,6 +52,8 @@ describe "/photos/[ID] - Delete this photo button" do
     
     visit "/photos/#{photo.id}"
 
+    expect(page).to have_content(first_user.username)
+
     expect(page).to have_link("Delete this photo")
   end
 end
