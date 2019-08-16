@@ -51,13 +51,6 @@ describe "/photos/[ID] - Delete this photo button" do
     end
     
     visit "/photos/#{photo.id}"
-      
-    like_button = find_button("Like")
-    like_form = find("form", text: "Like")
-    
-    within(:xpath, like_form.path) do
-      expect(like_form.has_no_field?).to eql(true)
-    end
 
     expect(page).to have_link("Delete this photo")
   end
