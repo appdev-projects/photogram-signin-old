@@ -58,6 +58,17 @@ desc "Fill the database tables with some dummy data"
       {id: 120, username: "Elmer", private: true, likes_count: 36, comments_count: 36, created_at: "2017-11-24 23:32:54"}
     ]
     User.import(users, {:validate => false})
+
+    if User.method_defined?(:passowrd) || User.has_attribute?(:password_digest)
+      User.all.each do |user|
+        user.password = "password"
+        user.save
+      end
+      p "Added passwords to users"
+    else
+      p "No password or password_digest column for a User yet"
+    end
+
     follow_requests = [
       {id: 1608, sender_id: 114, recipient_id: 81, status: "accepted", created_at: "2015-04-24 01:26:47"},
       {id: 1609, sender_id: 118, recipient_id: 81, status: "accepted", created_at: "2018-03-20 11:34:16"},
